@@ -22,8 +22,8 @@ class EmpleadoRepository:
         return db.query(models.Comercio).filter(models.Empleado.id == _id).first()
 
     @staticmethod
-    def fetch_by_name(db: Session, name):
-        return db.query(models.Comercio).filter(models.Empleado.nombre == name).first()
+    def fetch_by_uuid(db: Session, uuid):
+        return db.query(models.Empleado).filter(models.Empleado.uuid == uuid).first()
 
     @staticmethod
     def fetch_all(db: Session, skip: int = 0, limit: int = 100):

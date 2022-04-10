@@ -10,6 +10,19 @@ class EmpleadoBase(BaseModel):
     activo: bool
 
 
+class EmpleadoBaseCreate(BaseModel):
+    nombre: str
+    apellidos: str
+    pin: str
+
+
+class EmpleadoBaseUpdate(BaseModel):
+    nombre: str
+    apellidos: str
+    pin: str
+    activo: bool
+
+
 class EmpleadoCreate(EmpleadoBase):
     pass
 

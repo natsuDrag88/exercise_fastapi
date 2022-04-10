@@ -2,3 +2,4 @@ fastapi~=0.75.1
 SQLAlchemy~=1.4.35
 fastapi-utils~=0.2.1
 pydantic~=1.9.0
+ujson~=5.2.0

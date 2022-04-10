@@ -1,5 +1,6 @@
 import uuid as _uuid
 from datetime import datetime
+from typing import TypedDict, Dict
 
 import sqlalchemy as sa
 from fastapi_utils.guid_type import GUID
@@ -26,6 +27,15 @@ class Comercio(Base):
                              cascade="all, delete-orphan")
 
 
+class EmpleadoDict(TypedDict):
+    uuid: str
+    nombre: str
+    apellidos: str
+    pin: str
+    fecha_creacion: datetime
+    activo: bool
+
+
 class Empleado(Base):
     __tablename__ = "empleado"
 
@@ -38,5 +48,22 @@ class Empleado(Base):
     fecha_creacion = Column(DateTime, default=datetime.now)
     activo = Column(Boolean, default=True)
 
-    class Meta:
-        unique_together = ('pin', 'comercio')
+    def __init__(self, uuid: str, nombre: str, apellidos: str, pin: str, fecha_creacion: datetime,
+                 activo: bool):
+        self.uuid = uuid
+        self.nombre = nombre
+        self.apellidos = apellidos
+        self.pin = pin
+        self.fecha_creacion = fecha_creacion
+        self.activo = activo
+
+    def __repr__(self) -> str:
+        return f"<Empleado {self.nombre_completo}>"
+
+    @property
+    def serialize(self) -> dict[str, str | datetime | bool]:
+        """
+        Return item in serializeable format
+        """
+        return {"id": self.uuid, "nombre_completo": self.nombre + ' ' + self.apellidos, "pin": self.pin,
+                "fecha_creacion": self.fecha_creacion, "activo": self.activo}
